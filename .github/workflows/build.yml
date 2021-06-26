@@ -41,10 +41,10 @@ jobs:
           settings-path: $GITHUB_WORKSPACE/settings.xml
 
       - name: Build
-        run: mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml -s $GITHUB_WORKSPACE/settings.xml
 
       - name: Publish maven package to GitHub
-        run: mvn deploy
+        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
