@@ -62,9 +62,6 @@ jobs:
           tags: docker.pkg.github.com/avijitmondal/github-actions/github-actions:${{steps.vars.outputs.version}}-${{steps.vars.outputs.tag}}
           github-token: ${{ github.token }}
           push: true
-          secrets: |
-            GITHUB_ACTOR=${{ github.actor }}
-            GITHUB_TOKEN=${{ github.token }}          
 
       - name: Published image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
