@@ -30,7 +30,6 @@ jobs:
       - name: Get the version
         id: vars
         run: |
-          echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
           echo ::set-output name=tag::$(echo $(git log --oneline|head -n 1|awk '{print $1}'))
 
       - name: Set up JDK 11
@@ -59,7 +58,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          tags: docker.pkg.github.com/avijitmondal/github-actions/github-actions:${{steps.vars.outputs.version}}-${{steps.vars.outputs.tag}}
+          tags: docker.pkg.github.com/avijitmondal/github-actions/github-actions:${{steps.vars.outputs.tag}}
           github-token: ${{ github.token }}
           push: true
 
