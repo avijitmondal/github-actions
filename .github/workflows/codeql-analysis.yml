@@ -29,8 +29,16 @@ jobs:
       with:
         languages: ${{ matrix.language }}
 
-    - name: Autobuild
+    - if: matrix.language != 'java'
+      name: Autobuild
       uses: github/codeql-action/autobuild@v1
+
+    - if: matrix.language == 'java'
+      name: Build Java
+      run: mvn install -s $GITHUB_WORKSPACE/settings.xml
+      env:
+        GITHUB_ACTOR: ${{ github.actor }}
+        GITHUB_TOKEN: ${{ github.token }}
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
