@@ -31,14 +31,13 @@ jobs:
         id: vars
         run: |
           echo ::set-output name=tag::$(echo $(git log --oneline|head -n 1|awk '{print $1}'))
-          echo $(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+          echo $(mvn -q -s $GITHUB_WORKSPACE/settings.xml -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
 
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
           java-version: 11
           server-id: github
-          settings-path: $GITHUB_WORKSPACE/settings.xml
 
       - name: Build
         run: mvn -B package --file pom.xml -s $GITHUB_WORKSPACE/settings.xml
